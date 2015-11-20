@@ -100,6 +100,15 @@ class YourWordsCompetitionEntry(models.Model):
     is_shortlisted = models.BooleanField(default=False)
     is_winner = models.BooleanField(default=False)
 
+    article_page = models.ForeignKey(
+        'core.ArticlePage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text=_('Page to which the entry was converted to')
+    )
+
     class Meta:
         verbose_name = 'YourWords Competition Entry'
         verbose_name_plural = 'YourWords Competition Entries'
