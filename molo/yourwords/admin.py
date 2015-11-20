@@ -70,7 +70,7 @@ class YourWordsCompetitionEntryForm(forms.ModelForm):
 
 class YourWordsCompetitionEntryAdmin(admin.ModelAdmin):
     list_display = ['story_name', 'truncate_text', 'user', 'hide_real_name',
-                    'get_date', 'is_read', 'is_shortlisted',
+                    'submission_date', 'is_read', 'is_shortlisted',
                     'is_winner', '_convert']
     list_filter = ['competition__slug', 'is_read', 'is_shortlisted',
                    'is_winner', 'submission_date']
@@ -80,9 +80,6 @@ class YourWordsCompetitionEntryAdmin(admin.ModelAdmin):
     readonly_fields = ('competition', 'story_name', 'story_text', 'user',
                        'hide_real_name', 'submission_date')
     actions = [download_as_csv]
-
-    def get_date(self, obj):
-        return obj.submission_date
 
     def truncate_text(self, obj, *args, **kwargs):
         return truncatechars(obj.story_text, 30)
@@ -120,7 +117,7 @@ class YourWordsCompetitionAdmin(admin.ModelAdmin):
 
     def status(self, obj, *args, **kwargs):
         if obj.live:
-            return 'First published on ' + str(obj.first_published_at)
+            return 'First published on ' + str(obj.first_published_at.date())
         return 'Unpublished'
 
     def entries(self, obj, *args, **kwargs):
