@@ -33,6 +33,19 @@ def download_as_csv(YourWordsCompetitionEntryAdmin, request, queryset):
 download_as_csv.short_description = "Download selected as csv"
 
 
+def download_as_csv(YourWordsCompetitionEntryAdmin, request, queryset):
+    opts = queryset.model._meta
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment;filename=export.csv'
+    writer = csv.writer(response)
+    field_names = [field.name for field in opts.fields]
+    writer.writerow(field_names)
+    for obj in queryset:
+        writer.writerow([getattr(obj, field) for field in field_names])
+    return response
+download_as_csv.short_description = "Download selected as csv"
+
+
 @staff_member_required
 def convert_to_article(request, entry_id):
     def get_entry_author(entry):
