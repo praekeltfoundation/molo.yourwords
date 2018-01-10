@@ -12,8 +12,8 @@
     </h1>
 
     {% if competition.thank_you_page.get_parent_page.get_effective_image %}
-      {% image competition.thank_you_page.get_parent_page.get_effective_image width-98 as tmp_photo_small %}
-      {% image competition.thank_you_page.get_parent_page.get_effective_image width-320 as tmp_photo_large %}
+      {% image competition.thank_you_page.get_parent_page.get_effective_image width-98 format-jpeg jpegquality-70 as tmp_photo_small %}
+      {% image competition.thank_you_page.get_parent_page.get_effective_image width-320 format-jpeg jpegquality-70 as tmp_photo_large %}
        <img src="{{ tmp_photo_small.url }}" srcset="{{ tmp_photo_large.url }}" alt="{{ competition.get_parent_page.get_effective_image.title }}"/>
     {% endif %}
     <h2 class="heading heading--yourwords-subtitle">
